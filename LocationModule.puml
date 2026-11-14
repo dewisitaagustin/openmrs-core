@@ -1,0 +1,43 @@
+@startuml LocationModule
+
+title Reverse Engineering - Location Module
+
+interface LocationService {
+    +setLocationDAO(dao : LocationDAO)
+    +saveLocation(location : Location) : Location
+    +getLocation(locationId : Integer) : Location
+    +getLocation(name : String) : Location
+    +getAllLocations(includeRetired : boolean) : List<Location>
+    +getLocations(nameFragment : String) : List<Location>
+    +getLocationsByTag(tag : LocationTag) : List<Location>
+    +retireLocation(location : Location, reason : String) : Location
+    +purgeLocation(location : Location) : void
+}
+
+class LocationServiceImpl {
+    -dao : LocationDAO
+
+    +setLocationDAO(dao : LocationDAO) : void
+    +saveLocation(location : Location) : Location
+    +getLocation(locationId : Integer) : Location
+    +getLocation(name : String) : Location
+    +getAllLocations(includeRetired : boolean) : List<Location>
+    +getLocations(nameFragment : String) : List<Location>
+    +getLocationsByTag(tag : LocationTag) : List<Location>
+    +retireLocation(location : Location, reason : String) : Location
+    +purgeLocation(location : Location) : void
+}
+
+interface LocationDAO {
+    +saveLocation(location : Location) : Location
+    +getLocation(locationId : Integer) : Location
+    +getLocation(name : String) : Location
+    +getAllLocations(includeRetired : boolean) : List<Location>
+    +getLocations(...) : List<Location>
+    +deleteLocation(location : Location) : void
+}
+
+LocationService <|.. LocationServiceImpl : implements
+LocationServiceImpl --> LocationDAO : uses
+
+@enduml
